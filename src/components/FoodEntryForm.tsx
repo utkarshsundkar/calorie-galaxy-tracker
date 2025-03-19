@@ -43,13 +43,16 @@ const FoodEntryForm = () => {
         return;
       }
       
-      addEntry({
+      // If any field is missing, use default values
+      const foodEntry = {
         foodName: parsedResult.foodName || foodDescription,
         calories: Number(parsedResult.calories) || 0,
         protein: Number(parsedResult.protein) || 0,
         carbs: Number(parsedResult.carbs) || 0,
         fat: Number(parsedResult.fat) || 0,
-      });
+      };
+      
+      addEntry(foodEntry);
       
       toast.success("Food added successfully");
       setFoodDescription("");
