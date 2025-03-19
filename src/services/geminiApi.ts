@@ -1,7 +1,7 @@
 
 const API_KEY = "AIzaSyBMrbfHkSND7MOCo0ML1GifyppVLZAC70o";
-// Updated to use the correct model name with v1 API
-const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent";
+// Updated to use the correct API endpoint
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
 export interface GeminiResponse {
   candidates: {
@@ -30,6 +30,7 @@ export async function analyzeFoodWithGemini(foodDescription: string): Promise<st
       Only return the JSON. Food description: ${foodDescription}
     `;
 
+    console.log("Calling Gemini API with URL:", API_URL);
     const response = await fetch(`${API_URL}?key=${API_KEY}`, {
       method: "POST",
       headers: {
@@ -48,13 +49,15 @@ export async function analyzeFoodWithGemini(foodDescription: string): Promise<st
       }),
     });
 
-    const data = await response.json();
-    
     if (!response.ok) {
-      console.error("Gemini API error:", data);
-      throw new Error("Failed to analyze food");
+      const errorData = await response.json();
+      console.error("Gemini API error:", errorData);
+      throw new Error(`Failed to analyze food: ${errorData.error?.message || 'Unknown error'}`);
     }
 
+    const data = await response.json();
+    console.log("Gemini API response:", data);
+    
     const responseText = data.candidates[0]?.content?.parts[0]?.text || "";
     return responseText;
   } catch (error) {

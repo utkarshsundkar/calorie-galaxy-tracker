@@ -26,6 +26,8 @@ const FoodEntryForm = () => {
     
     try {
       const result = await analyzeFoodWithGemini(foodDescription);
+      console.log("Raw API result:", result);
+      
       let parsedResult;
       
       try {
@@ -33,11 +35,12 @@ const FoodEntryForm = () => {
         const jsonMatch = result.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           parsedResult = JSON.parse(jsonMatch[0]);
+          console.log("Parsed result:", parsedResult);
         } else {
           throw new Error("No valid JSON found in response");
         }
       } catch (parseError) {
-        console.error("Error parsing JSON:", result);
+        console.error("Error parsing JSON:", parseError, "Raw text:", result);
         toast.error("Failed to parse food information");
         setIsAnalyzing(false);
         return;
