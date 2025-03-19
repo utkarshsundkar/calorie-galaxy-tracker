@@ -1,7 +1,7 @@
 
 const API_KEY = "AIzaSyBMrbfHkSND7MOCo0ML1GifyppVLZAC70o";
-// Updated to v1 API instead of v1beta
-const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent";
+// Updated to use the correct model name with v1 API
+const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent";
 
 export interface GeminiResponse {
   candidates: {
