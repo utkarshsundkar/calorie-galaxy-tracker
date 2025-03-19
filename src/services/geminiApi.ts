@@ -1,7 +1,7 @@
 
 const API_KEY = "AIzaSyBMrbfHkSND7MOCo0ML1GifyppVLZAC70o";
-// Updated to use the correct API endpoint
-const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+// Using the correct API version and model name
+const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent";
 
 export interface GeminiResponse {
   candidates: {
@@ -46,6 +46,11 @@ export async function analyzeFoodWithGemini(foodDescription: string): Promise<st
             ],
           },
         ],
+        generationConfig: {
+          temperature: 0.2, // Lower temperature for more factual responses
+          topP: 0.8,
+          topK: 40
+        }
       }),
     });
 

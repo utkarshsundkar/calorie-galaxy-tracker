@@ -25,6 +25,7 @@ const FoodEntryForm = () => {
     setIsAnalyzing(true);
     
     try {
+      toast.info("Analyzing your food...");
       const result = await analyzeFoodWithGemini(foodDescription);
       console.log("Raw API result:", result);
       
